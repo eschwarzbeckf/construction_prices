@@ -193,6 +193,9 @@ class HomedepotSpider(scrapy.Spider):
             for product in payload["contents"]:
                 if product.get("name") == "YESO CONSTRUCCIÓN 40 Kg":
                     product["manufacturer"]="YESERA MONTERREY"
+                
+                if product.get("name") == "MOCUZARI":
+                    product["manufacturer"]="YINSA"
 
                 item = ItemLoader(item=PricesItem())
                 item.add_value("webpage", "Home Depot")

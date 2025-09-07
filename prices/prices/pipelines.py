@@ -8,6 +8,7 @@
 import csv
 from datetime import datetime
 import os
+import re
 
 
 class PricesPipeline:
@@ -38,3 +39,26 @@ class PricesPipeline:
         # Write the item data
         self.writer.writerow([item.get(field, '') for field in item.fields.keys()])
         return item
+
+class ProductPipeline:
+    def __init__(self):
+        pass
+    def process_item(self,item,spider):
+        # estuco, mortero, yeso, adhesivo
+        estuco = re.compile(r'\bestuco\b', re.IGNORECASE)
+        morter= re.compile(r'\bmortero\b', re.IGNORECASE)
+        yeso = re.compile(r'\byeso\b', re.IGNORECASE)
+        adhesivo = re.compile(r'\badhesivo\b', re.IGNORECASE)
+        for pattern, product in [(estuco, 'Estuco'), (morter, 'Mortero'), (yeso, 'Yeso'), (adhesivo, 'Adhesivo')]:
+            if pattern.search(item['name']):
+                item['product'] = product
+                break
+        return item
+    
+class TypeOfProductPipeline:
+    def process_item(self,item,spider):
+        tipe_of_product = item['tipe_of_product']
+        tipe_of_product = re.sub(r'\s+', ' ', tipe_of_product).strip()
+        item['tipe_of_product'] = tipe_of_product
+        return item
+

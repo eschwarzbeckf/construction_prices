@@ -19,3 +19,5 @@ class PricesItem(Item):
     state = Field(output_processor=Join())
     store_name = Field(output_processor=Join())
     store_address = Field(output_processor=Join())
+    product = Field(output_processor=Join(),default='')
+

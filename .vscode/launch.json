@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Scrapy Crawl",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${cwd}\\prices",
+            "args": [
+                "scrapy",
+                "crawl",
+                "${fileBasenameNoExtension}"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false
+        }
+    ]
+}

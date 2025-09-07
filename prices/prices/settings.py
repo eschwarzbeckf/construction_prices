@@ -23,8 +23,8 @@ ROBOTSTXT_OBEY = True
 
 # Concurrency and throttling settings
 CONCURRENT_REQUESTS = 5
-CONCURRENT_REQUESTS_PER_DOMAIN = 1
-DOWNLOAD_DELAY = 1
+CONCURRENT_REQUESTS_PER_DOMAIN = 3
+DOWNLOAD_DELAY = 3
 
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = True
@@ -60,6 +60,7 @@ COOKIES_ENABLED = True
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    "prices.pipelines.PricesPipeline": 300,
+   "prices.pipelines.ProductPipeline":200
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -26,10 +26,10 @@ class MapcoSpider(scrapy.Spider):
             item.add_value("short_description", '')
             item.add_value("price", price)
             item.add_value("date_scraped", datetime.now().strftime("%Y-%m-%d"))
-            item.add_value("city", '')
-            item.add_value("state", '')
+            item.add_value("city", 'Navojoa')
+            item.add_value("state", 'Sonora')
             item.add_value("store_address", '')
-            item.add_value("store_name", '')
+            item.add_value("store_name", 'Navojoa')
 
             yield item.load_item()
         
