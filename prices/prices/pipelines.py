@@ -8,13 +8,10 @@
 import csv
 from datetime import datetime
 import os
-from dotenv import load_dotenv
 import re
-from azure.storage.blob import BlobServiceClient
-
-# Load environment variables from .env file
+from azure.storage.blob import BlobServiceClient 
+from dotenv import load_dotenv
 load_dotenv()
-
 
 class PricesPipeline:
     def __init__(self):
@@ -22,9 +19,6 @@ class PricesPipeline:
         self.file = None
         self.writer = None
         self.header_written = False
-        self.blob_url = os.getenv('BLOB_URL')
-        print(f"\n\n{self.blob_url}\n\n")
-        self.blob_service_client = BlobServiceClient(account_url=self.blob_url)
 
 
     def open_spider(self, spider):
@@ -47,6 +41,7 @@ class PricesPipeline:
 
         # Write the item data
         self.writer.writerow([item.get(field, '') for field in item.fields.keys()])
+
         return item
 
 class ProductPipeline:
@@ -63,11 +58,21 @@ class ProductPipeline:
                 item['product'] = product
                 break
         return item
+
+class UploadToAzurePipeline:
+    def __init__(self):
+        print(f"\n\n {os.getenv('BLOB_SAS_URL')} \n\n")
+        self.service = BlobServiceClient(account_url=os.getenv("BLOB_SAS_URL"))
     
-class TypeOfProductPipeline:
-    def process_item(self,item,spider):
-        tipe_of_product = item['tipe_of_product']
-        tipe_of_product = re.sub(r'\s+', ' ', tipe_of_product).strip()
-        item['tipe_of_product'] = tipe_of_product
+    def process_item(self, item, spider):
+        blob_name = f"prices_{datetime.now().strftime('%Y-%m-%d')}.csv"
+        blob_client = self.service.get_container_client("csvs")
+        blob_client = blob_client.get_blob_client(blob_name)
+        with open(f'prices_{datetime.now().strftime("%Y-%m-%d")}.csv', 'rb') as data:
+            blob_client.upload_blob(data, overwrite=True)
+        
+        os.remove(f'prices_{datetime.now().strftime("%Y-%m-%d")}.csv')
+
         return item
+    
 
