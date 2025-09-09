@@ -63,7 +63,7 @@ typing_extensions==4.15.0
 tzdata==2025b
 ucrt==10.0.22621.0
 urllib3==2.5.0
-vc==14.3==h2df5915_10
+vc==14.3
 vc14_runtime==14.44.35208
 vs2015_runtime==14.44.35208
 w3lib==2.1.2
