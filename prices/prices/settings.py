@@ -59,6 +59,7 @@ COOKIES_ENABLED = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
+   "prices.pipelines.UploadToAzurePipeline": 400,
    "prices.pipelines.PricesPipeline": 300,
    "prices.pipelines.ProductPipeline":200
 }
