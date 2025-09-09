@@ -8,7 +8,12 @@
 import csv
 from datetime import datetime
 import os
+from dotenv import load_dotenv
 import re
+from azure.storage.blob import BlobServiceClient
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 class PricesPipeline:
@@ -17,6 +22,10 @@ class PricesPipeline:
         self.file = None
         self.writer = None
         self.header_written = False
+        self.blob_url = os.getenv('BLOB_URL')
+        print(f"\n\n{self.blob_url}\n\n")
+        self.blob_service_client = BlobServiceClient(account_url=self.blob_url)
+
 
     def open_spider(self, spider):
         # Check if file exists to determine if header needs to be written

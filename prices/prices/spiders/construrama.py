@@ -4,6 +4,7 @@ from scrapy.loader import ItemLoader
 from datetime import datetime
 from time import sleep
 
+# Define stores names with their respective cities and states
 stores = {
     "Sonora":{
         "Hermosillo":{
@@ -107,8 +108,6 @@ class ConstruramaSpider(scrapy.Spider):
         short_descriptions = response.xpath("//ul[@id='isGrid']//div[@slot='description']/text()").getall()
         prices = response.xpath("//ul[@id='isGrid']//cma-card/@currentprice").getall()
         prices = [price.strip().replace('$','').replace(',','') for price in prices]
-
-        # inspect_response(response,self)
         
         for name,manufacturer,short_description,price in zip(names,manufacturers,short_descriptions,prices):
             item = ItemLoader(item=PricesItem())

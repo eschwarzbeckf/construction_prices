@@ -5,8 +5,12 @@ from .mapco import MapcoSpider
 from .construrama import ConstruramaSpider
 
 if __name__ == "__main__":
+    # Start CrawlerProcess
     process = CrawlerProcess(get_project_settings())
-    for spider in [HomedepotSpider, MapcoSpider, ConstruramaSpider]:
+    
+    # Add spiders to the process
+    for spider in [MapcoSpider,HomedepotSpider, ConstruramaSpider]:
         process.crawl(spider)
     
+    # Start the crawling process
     process.start()
