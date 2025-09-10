@@ -27,7 +27,7 @@ def upload_csv_to_azure(file,filename:str) -> None:
     blob_client = BlobClient(account_url=url,credential=token,container_name='csvs',blob_name=f"csv/{filename}")
     blob_client.upload_blob(file)
 
-if __name__ == "__main__":
+def run_process():
     # Run the spiders
     run_spiders([MapcoSpider,HomedepotSpider, ConstruramaSpider])
 
