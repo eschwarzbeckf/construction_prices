@@ -9,9 +9,6 @@ import csv
 from datetime import datetime
 import os
 import re
-from azure.storage.blob import BlobServiceClient 
-from dotenv import load_dotenv
-load_dotenv()
 
 class PricesPipeline:
     def __init__(self):
@@ -57,22 +54,6 @@ class ProductPipeline:
             if pattern.search(item['name']):
                 item['product'] = product
                 break
-        return item
-
-class UploadToAzurePipeline:
-    def __init__(self):
-        print(f"\n\n {os.getenv('BLOB_SAS_URL')} \n\n")
-        self.service = BlobServiceClient(account_url=os.getenv("BLOB_SAS_URL"))
-    
-    def process_item(self, item, spider):
-        blob_name = f"prices_{datetime.now().strftime('%Y-%m-%d')}.csv"
-        blob_client = self.service.get_container_client("csvs")
-        blob_client = blob_client.get_blob_client(blob_name)
-        with open(f'prices_{datetime.now().strftime("%Y-%m-%d")}.csv', 'rb') as data:
-            blob_client.upload_blob(data, overwrite=True)
-        
-        os.remove(f'prices_{datetime.now().strftime("%Y-%m-%d")}.csv')
-
         return item
     
 
