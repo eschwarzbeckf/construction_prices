@@ -33,6 +33,8 @@ def run_process():
 
     # Set file name
     filename = f"prices_{datetime.now().strftime('%Y-%m-%d')}.csv"
+    print("Scraping completed")
+    print("Start upload of file to azure")
 
     # Upload to azure
     try:
@@ -41,7 +43,13 @@ def run_process():
         
         # Remove file
         os.remove(f'{filename}')
-    
+
+        print("File uploaded to Azure")
     except Exception as e:
         print("\n\n Could not upload file \n\n","Due to Below Error:\n\n")
         print(e)
+
+if __name__ == '__main__':
+    print("Scraping Process Started")
+    run_process()
+    print("Scraping Process Ended")
